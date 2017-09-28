@@ -1,0 +1,125 @@
+---
+title: "Platt P-I Models"
+author: "S. Wotherspoon"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+The package provides self starting models to fit Platt's model for a
+Photosynthesis-Irradiance (PI) curve.  The `platt0` model fits a
+Platt's original model
+
+\[
+P = P_{max} (1 - \exp(-\alpha I/P_{max})) \exp(-\beta I/P_{max})
+\]
+while `platt0` fits a modified form of the model that includes a additional intercept
+\[
+P = P_{max} (1 - \exp(-\alpha I/P_{max})) \exp(-\beta I/P_{max}) + R
+\]
+
+
+## PI Example
+
+The `PI` data set contains data for 6 Photosynthesis-Irrandaiance relationships
+```{r}
+library(Platt)
+data(PI)
+head(PI)
+```
+
+
+```{r}
+library(ggplot2)
+ggplot(PI,aes(x=I,y=P,group=Depth))+
+  geom_point()+
+  facet_wrap(~Depth)
+```
+
+
+### Individual Sample
+
+Extract the data for just depth C
+```{r}
+PI.C <- subset(PI,Depth=="C")
+```
+
+To fit the modified model to just this data
+```{r}
+fit <- nls(P~SSPlatt(I,alpha,beta,Pmax,R),data=PI.C)
+summary(fit)
+```
+
+Fitted values can be extracted with `fitted`
+```{r}
+fitted(fit)
+```
+and predictions can be made for new points with `predict`
+```{r}
+PI.pr <- data.frame(I=seq(0,1700,20))
+PI.pr$P <- predict(fit,PI.pr)
+head(PI.pr)
+```
+
+The respiration corrected \(P_{max}\) is computed with `correctedPmax`
+```{r}
+correctedPmax(fit)
+```
+
+These can be used to compare the data and fitted model
+```{r}
+library(ggplot2)
+ggplot(PI.C,aes(x=I,y=P))+
+  geom_line(data=PI.pr,col="dodgerblue")+
+  geom_point()+
+  geom_point(aes(x=I,y=fitted(fit)),col="dodgerblue")
+```
+
+
+Plotting the residuals versus the fitted values suggests the variance
+might grow with the fitted mean. 
+```{r}
+plot(residuals(fit)~fitted(fit))
+```
+
+### Batch Fitting
+
+Summaries can be produced for all depths simultaneously with `by`
+```{r}
+by(PI,PI$Depth,function(d) summary(nls(P~SSPlatt(I,alpha,beta,Pmax,R),data=d)))
+```
+
+Alternately, a table of the estimated coefficients can be constructed
+with `dplyr` 
+```{r}
+library(dplyr)
+PI.coef <- PI %>% 
+  group_by(Depth) %>% 
+  do(as.data.frame(t(coef(nls(P~SSPlatt(I,alpha,beta,Pmax,R),data=.))))) %>%
+  as.data.frame
+
+PI.coef
+```
+
+
+Similarly, the fits can be graphically examined 
+```{r}
+library(dplyr)
+PI.pr <- PI %>% 
+  group_by(Depth) %>% 
+  do({
+    d <- data.frame(I=seq(0,1700,20))
+    d$P <- predict(nls(P~SSPlatt(I,alpha,beta,Pmax,R),data=.),d)
+    d
+  })
+ggplot(PI,aes(x=I,y=P,group=Depth))+
+  geom_line(data=PI.pr)+
+  geom_point()+
+  facet_wrap(~Depth)
+```
+
+
