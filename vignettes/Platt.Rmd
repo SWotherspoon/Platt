@@ -17,7 +17,8 @@ Platt's original model
 \[
 P = P_{max} (1 - \exp(-\alpha I/P_{max})) \exp(-\beta I/P_{max})
 \]
-while `platt0` fits a modified form of the model that includes a additional intercept
+while `platt0` fits a modified form of the model that includes an 
+additional intercept
 \[
 P = P_{max} (1 - \exp(-\alpha I/P_{max})) \exp(-\beta I/P_{max}) + R
 \]

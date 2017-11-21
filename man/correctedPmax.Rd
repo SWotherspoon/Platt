@@ -13,7 +13,7 @@ correctedPmax(fit)
 The corrected Pmax
 }
 \description{
-Estiamte respiration corrected Pmax from a fit of a Platt model.
+Estimate respiration corrected Pmax from a fit of a Platt model.
 }
 \details{
 Given a fitted \code{\link{SSPlatt}} model fitted with \code{nls},

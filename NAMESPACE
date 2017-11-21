@@ -3,3 +3,8 @@
 export(SSPlatt)
 export(SSPlatt0)
 export(correctedPmax)
+importFrom(stats,asOneSidedFormula)
+importFrom(stats,coef)
+importFrom(stats,lsfit)
+importFrom(stats,nls)
+importFrom(stats,setNames)
