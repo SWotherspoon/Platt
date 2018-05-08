@@ -4,10 +4,14 @@
 \alias{correctedPmax}
 \title{Respiration Corrected Pmax}
 \usage{
-correctedPmax(fit)
+correctedPmax(alpha, beta, Pmax)
 }
 \arguments{
-\item{fit}{an SSPlatt model fitted with \code{nls}}
+\item{alpha}{fitted coefficient}
+
+\item{beta}{fitted coefficient}
+
+\item{Pmax}{fitted coefficient}
 }
 \value{
 The corrected Pmax
@@ -16,6 +20,6 @@ The corrected Pmax
 Estimate respiration corrected Pmax from a fit of a Platt model.
 }
 \details{
-Given a fitted \code{\link{SSPlatt}} model fitted with \code{nls},
-compute Pmax corrected for respiration.
+Given coefficients from a fitted \code{\link{SSPlatt}} model
+fitted with \code{nls}, compute Pmax corrected for respiration.
 }

@@ -68,7 +68,8 @@ head(PI.pr)
 
 The respiration corrected \(P_{max}\) is computed with `correctedPmax`
 ```{r}
-correctedPmax(fit)
+with(as.list(coef(fit)),
+  correctedPmax(alpha,beta,Pmax))
 ```
 
 These can be used to compare the data and fitted model

@@ -5,7 +5,7 @@ Authors@R: c(person("Karen", "Westwood", email = "Karen.Westwood@aad.gov.au", ro
              person("Simon", "Wotherspoon", email = "Simon.Wotherspoon@utas.edu.au", role = c("aut")))
 Description: Provides self starting models for fitting Photosynthesis-Irradiance relationships with nls or gnls.
 Depends:
-	R (>= 3.4.1)
+	R (>= 3.4.0)
 Imports:
 	stats
 Suggests:
