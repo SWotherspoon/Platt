@@ -40,7 +40,7 @@
 ##' @export
 SSPlatt <- stats::selfStart(
   ~ Pmax*(1-exp(-alpha*I/Pmax))*exp(-beta*I/Pmax)+R,
-  function(mCall,data,LHS) {
+  function(mCall,data,LHS,...) {
     ## Extract x and y but do not average replicated x values
     x <- mCall[["I"]]
     y <- LHS
@@ -118,7 +118,7 @@ SSPlatt <- stats::selfStart(
 ##' @export
 SSPlatt0 <- stats::selfStart(
   ~ Pmax*(1-exp(-alpha*I/Pmax))*exp(-beta*I/Pmax),
-  function(mCall,data,LHS) {
+  function(mCall,data,LHS,...) {
     ## Extract x and y but do not average replicated x values
     x <- mCall[["I"]]
     y <- LHS

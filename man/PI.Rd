@@ -4,12 +4,14 @@
 \name{PI}
 \alias{PI}
 \title{Simulated Photosynthesis-Irradiance data}
-\format{A data frame with 124 rows and 3 variables:
+\format{
+A data frame with 124 rows and 3 variables:
 \describe{
   \item{Depth}{Sample identifier}
   \item{P}{Photosynthetic rate}
   \item{I}{Irradiance}
-}}
+}
+}
 \usage{
 PI
 }
