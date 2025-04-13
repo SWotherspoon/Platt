@@ -20,6 +20,6 @@ The corrected Pmax
 Estimate respiration corrected Pmax from a fit of a Platt model.
 }
 \details{
-Given coefficients from a fitted \code{\link{SSPlatt}} model
-fitted with \code{nls}, compute Pmax corrected for respiration.
+Given coefficients from a fitted [SSPlatt()] model
+fitted with [nls()], compute Pmax corrected for respiration.
 }

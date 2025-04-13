@@ -12,7 +12,7 @@
 "PI"
 
 
-##' A \code{selfStart} model for Platt's Photosynthesis-Irradiance
+##' A `selfStart`` model for Platt's Photosynthesis-Irradiance
 ##' curve with Intercept.
 ##'
 ##' This model differs from Platt (1980) in that it allows for a
@@ -25,7 +25,7 @@
 ##' @param beta the rate of photoinhibition
 ##' @param Pmax light saturated photosynthetic rate
 ##' @param R intercept of the P-I curve
-##' @seealso \code{\link{SSPlatt0}}
+##' @seealso [SSPlatt0()]
 ##' @references
 ##' Platt, T.G.C.L., Gallegos, C.L. and Harrison,
 ##'   W.G. (1980). Photoinhibition of photosynthesis in natural
@@ -92,7 +92,7 @@ SSPlatt <- stats::selfStart(
   c("alpha","beta","Pmax","R"))
 
 
-##' A \code{selfStart} model for Platt's Photosynthesis-Irradiance
+##' A `selfStart`` model for Platt's Photosynthesis-Irradiance
 ##' curve without intercept.
 ##'
 ##' This model is the model decribed by Platt (1980)
@@ -103,7 +103,7 @@ SSPlatt <- stats::selfStart(
 ##' @param alpha initial slope of the light limited of the P-I curve
 ##' @param beta the rate of photoinhibition
 ##' @param Pmax light saturated photosynthetic rate
-##' @seealso \code{\link{SSPlatt}}
+##' @seealso [SSPlatt()]
 ##' @references
 ##' Platt, T.G.C.L., Gallegos, C.L. and Harrison,
 ##'   W.G. (1980). Photoinhibition of photosynthesis in natural
@@ -173,8 +173,8 @@ SSPlatt0 <- stats::selfStart(
 
 ##' Estimate respiration corrected Pmax from a fit of a Platt model.
 ##'
-##' Given coefficients from a fitted \code{\link{SSPlatt}} model
-##' fitted with \code{nls}, compute Pmax corrected for respiration.
+##' Given coefficients from a fitted [SSPlatt()] model
+##' fitted with [nls()], compute Pmax corrected for respiration.
 ##' @title Respiration Corrected Pmax
 ##' @param alpha fitted coefficient
 ##' @param beta fitted coefficient

@@ -18,7 +18,7 @@ SSPlatt(I, alpha, beta, Pmax, R)
 \item{R}{intercept of the P-I curve}
 }
 \description{
-A \code{selfStart} model for Platt's Photosynthesis-Irradiance
+A `selfStart`` model for Platt's Photosynthesis-Irradiance
 curve with Intercept.
 }
 \details{
@@ -38,5 +38,5 @@ Westwood, K.J., Griffiths, F.B., Meiners, K.M. and Williams,
   Topical Studies in Oceanography, 57(9), pp.794-814.
 }
 \seealso{
-\code{\link{SSPlatt0}}
+[SSPlatt0()]
 }

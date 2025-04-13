@@ -1,9 +1,10 @@
 Package: Platt
 Title: Modified Platt Photosynthesis-Irradiance Models
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: c(person("Karen", "Westwood", email = "Karen.Westwood@aad.gov.au", role = c("aut", "cre")),
              person("Simon", "Wotherspoon", email = "Simon.Wotherspoon@utas.edu.au", role = c("aut")))
-Description: Provides self starting models for fitting Photosynthesis-Irradiance relationships with nls or gnls.
+Description: Provides self starting models for fitting Photosynthesis-Irradiance 
+  relationships with nls or gnls.
 Depends:
 	R (>= 3.4.0)
 Imports:
@@ -16,7 +17,7 @@ Suggests:
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.2.1
+RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 URL: https://github.com/SWotherspoon/Platt
 BugReports: https://github.com/SWotherspoon/Platt/issues

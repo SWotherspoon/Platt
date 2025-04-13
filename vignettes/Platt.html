@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="S. Wotherspoon" />
+
+<meta name="date" content="2025-04-13" />
+
+<title>Platt P-I Models</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Platt P-I Models</h1>
+<h4 class="author">S. Wotherspoon</h4>
+<h4 class="date">2025-04-13</h4>
+
+
+
+<p>The package provides self starting models to fit Platt’s model for a
+Photosynthesis-Irradiance (PI) curve. The <code>platt0</code> model fits
+a Platt’s original model</p>
+<p><span class="math display">\[
+P = P_{max} (1 - \exp(-\alpha I/P_{max})) \exp(-\beta I/P_{max})
+\]</span> while <code>platt</code> fits a modified form of the model
+that includes an additional intercept <span class="math display">\[
+P = P_{max} (1 - \exp(-\alpha I/P_{max})) \exp(-\beta I/P_{max}) + R
+\]</span></p>
+<div id="pi-example" class="section level2">
+<h2>PI Example</h2>
+<p>The <code>PI</code> data set contains data for 6
+Photosynthesis-Irrandaiance relationships</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(Platt)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">data</span>(PI)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">head</span>(PI)</span></code></pre></div>
+<pre><code>##   Depth     I     P
+## 1     C  2.57 0.056
+## 2     C  2.57 0.096
+## 3     C 14.95 0.494
+## 4     C 24.09 0.866
+## 5     C 34.05 1.068
+## 6     C 46.51 1.274</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="fu">ggplot</span>(PI,<span class="fu">aes</span>(<span class="at">x=</span>I,<span class="at">y=</span>P,<span class="at">group=</span>Depth))<span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Depth)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<div id="individual-sample" class="section level3">
+<h3>Individual Sample</h3>
+<p>Extract the data for just depth C</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>PI.C <span class="ot">&lt;-</span> <span class="fu">subset</span>(PI,Depth<span class="sc">==</span><span class="st">&quot;C&quot;</span>)</span></code></pre></div>
+<p>To fit the modified model to just this data</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">nls</span>(P<span class="sc">~</span><span class="fu">SSPlatt</span>(I,alpha,beta,Pmax,R),<span class="at">data=</span>PI.C)</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code></pre></div>
+<pre><code>## 
+## Formula: P ~ SSPlatt(I, alpha, beta, Pmax, R)
+## 
+## Parameters:
+##         Estimate Std. Error t value Pr(&gt;|t|)    
+## alpha  4.765e-02  5.108e-03   9.329 4.24e-08 ***
+## beta   8.167e-04  9.452e-05   8.641 1.26e-07 ***
+## Pmax   1.830e+00  6.593e-02  27.748 1.34e-15 ***
+## R     -3.802e-02  6.122e-02  -0.621    0.543    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.07773 on 17 degrees of freedom
+## 
+## Number of iterations to convergence: 0 
+## Achieved convergence tolerance: 2.072e-06</code></pre>
+<p>Fitted values can be extracted with <code>fitted</code></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">fitted</span>(fit)</span></code></pre></div>
+<pre><code>##  [1] 0.08030736 0.08030736 0.54816029 0.80554695 1.02166072 1.22036146
+##  [7] 1.52233650 1.58144195 1.61496558 1.62962985 1.63377920 1.61244875
+## [13] 1.58525274 1.56227080 1.52753085 1.43751967 1.33206655 1.17878278
+## [19] 1.16979369 0.89369181 0.85314512
+## attr(,&quot;label&quot;)
+## [1] &quot;Fitted values&quot;</code></pre>
+<p>and predictions can be made for new points with
+<code>predict</code></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>PI.pr <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">I=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1700</span>,<span class="dv">20</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>PI.pr<span class="sc">$</span>P <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit,PI.pr)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="fu">head</span>(PI.pr)</span></code></pre></div>
+<pre><code>##     I          P
+## 1   0 -0.0380202
+## 2  20  0.6982502
+## 3  40  1.1251349
+## 4  60  1.3699480
+## 5  80  1.5076366
+## 6 100  1.5823200</code></pre>
+<p>The respiration corrected <span class="math inline">\(P_{max}\)</span> is computed with
+<code>correctedPmax</code></p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">with</span>(<span class="fu">as.list</span>(<span class="fu">coef</span>(fit)),</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>  <span class="fu">correctedPmax</span>(alpha,beta,Pmax))</span></code></pre></div>
+<pre><code>## [1] 1.678984</code></pre>
+<p>These can be used to compare the data and fitted model</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a><span class="fu">ggplot</span>(PI.C,<span class="fu">aes</span>(<span class="at">x=</span>I,<span class="at">y=</span>P))<span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>PI.pr,<span class="at">col=</span><span class="st">&quot;dodgerblue&quot;</span>)<span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>I,<span class="at">y=</span><span class="fu">fitted</span>(fit)),<span class="at">col=</span><span class="st">&quot;dodgerblue&quot;</span>)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<p>Plotting the residuals versus the fitted values suggests the variance
+might grow with the fitted mean.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">residuals</span>(fit)<span class="sc">~</span><span class="fu">fitted</span>(fit))</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+</div>
+<div id="batch-fitting" class="section level3">
+<h3>Batch Fitting</h3>
+<p>Summaries can be produced for all depths simultaneously with
+<code>by</code></p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="fu">by</span>(PI,PI<span class="sc">$</span>Depth,<span class="cf">function</span>(d) <span class="fu">summary</span>(<span class="fu">nls</span>(P<span class="sc">~</span><span class="fu">SSPlatt</span>(I,alpha,beta,Pmax,R),<span class="at">data=</span>d)))</span></code></pre></div>
+<pre><code>## PI$Depth: C
+## 
+## Formula: P ~ SSPlatt(I, alpha, beta, Pmax, R)
+## 
+## Parameters:
+##         Estimate Std. Error t value Pr(&gt;|t|)    
+## alpha  4.765e-02  5.108e-03   9.329 4.24e-08 ***
+## beta   8.167e-04  9.452e-05   8.641 1.26e-07 ***
+## Pmax   1.830e+00  6.593e-02  27.748 1.34e-15 ***
+## R     -3.802e-02  6.122e-02  -0.621    0.543    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.07773 on 17 degrees of freedom
+## 
+## Number of iterations to convergence: 0 
+## Achieved convergence tolerance: 2.072e-06
+## 
+## ------------------------------------------------------------ 
+## PI$Depth: D
+## 
+## Formula: P ~ SSPlatt(I, alpha, beta, Pmax, R)
+## 
+## Parameters:
+##         Estimate Std. Error t value Pr(&gt;|t|)    
+## alpha  0.0483119  0.0052251   9.246 4.82e-08 ***
+## beta   0.0006403  0.0000848   7.551 7.95e-07 ***
+## Pmax   1.7119640  0.0623983  27.436 1.62e-15 ***
+## R     -0.0821298  0.0563944  -1.456    0.164    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.07308 on 17 degrees of freedom
+## 
+## Number of iterations to convergence: 0 
+## Achieved convergence tolerance: 4.535e-06
+## 
+## ------------------------------------------------------------ 
+## PI$Depth: E
+## 
+## Formula: P ~ SSPlatt(I, alpha, beta, Pmax, R)
+## 
+## Parameters:
+##         Estimate Std. Error t value Pr(&gt;|t|)    
+## alpha  0.0480369  0.0073348   6.549 4.96e-06 ***
+## beta   0.0006590  0.0001326   4.971 0.000116 ***
+## Pmax   1.7998757  0.0936423  19.221 5.72e-13 ***
+## R     -0.0975328  0.0829311  -1.176 0.255774    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.109 on 17 degrees of freedom
+## 
+## Number of iterations to convergence: 0 
+## Achieved convergence tolerance: 1.842e-06
+## 
+## ------------------------------------------------------------ 
+## PI$Depth: F
+## 
+## Formula: P ~ SSPlatt(I, alpha, beta, Pmax, R)
+## 
+## Parameters:
+##         Estimate Std. Error t value Pr(&gt;|t|)    
+## alpha  5.700e-02  6.670e-03   8.545 1.47e-07 ***
+## beta   6.391e-04  8.617e-05   7.417 1.01e-06 ***
+## Pmax   1.711e+00  6.589e-02  25.962 4.06e-15 ***
+## R     -9.530e-02  6.121e-02  -1.557    0.138    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.07603 on 17 degrees of freedom
+## 
+## Number of iterations to convergence: 0 
+## Achieved convergence tolerance: 7.823e-07
+## 
+## ------------------------------------------------------------ 
+## PI$Depth: G
+## 
+## Formula: P ~ SSPlatt(I, alpha, beta, Pmax, R)
+## 
+## Parameters:
+##         Estimate Std. Error t value Pr(&gt;|t|)    
+## alpha  0.0788241  0.0226007   3.488 0.002818 ** 
+## beta   0.0008882  0.0002016   4.405 0.000387 ***
+## Pmax   1.6530430  0.1510065  10.947 4.05e-09 ***
+## R     -0.1882863  0.1505531  -1.251 0.228009    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.1632 on 17 degrees of freedom
+## 
+## Number of iterations to convergence: 0 
+## Achieved convergence tolerance: 2.409e-06
+## 
+## ------------------------------------------------------------ 
+## PI$Depth: H
+## 
+## Formula: P ~ SSPlatt(I, alpha, beta, Pmax, R)
+## 
+## Parameters:
+##       Estimate Std. Error t value Pr(&gt;|t|)    
+## alpha 0.024187   0.011527   2.098  0.05323 .  
+## beta  0.002398   0.001682   1.426  0.17438    
+## Pmax  1.365039   0.311088   4.388  0.00053 ***
+## R     0.233097   0.168092   1.387  0.18579    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.1932 on 15 degrees of freedom
+## 
+## Number of iterations to convergence: 0 
+## Achieved convergence tolerance: 3.391e-06</code></pre>
+<p>Alternately, a table of the estimated coefficients can be constructed
+with <code>dplyr</code></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     filter, lag</code></pre>
+<pre><code>## The following objects are masked from &#39;package:base&#39;:
+## 
+##     intersect, setdiff, setequal, union</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a>PI.coef <span class="ot">&lt;-</span> PI <span class="sc">%&gt;%</span> </span>
+<span id="cb21-2"><a href="#cb21-2" tabindex="-1"></a>  <span class="fu">group_by</span>(Depth) <span class="sc">%&gt;%</span> </span>
+<span id="cb21-3"><a href="#cb21-3" tabindex="-1"></a>  <span class="fu">do</span>(<span class="fu">as.data.frame</span>(<span class="fu">t</span>(<span class="fu">coef</span>(<span class="fu">nls</span>(P<span class="sc">~</span><span class="fu">SSPlatt</span>(I,alpha,beta,Pmax,R),<span class="at">data=</span>.))))) <span class="sc">%&gt;%</span></span>
+<span id="cb21-4"><a href="#cb21-4" tabindex="-1"></a>  as.data.frame</span>
+<span id="cb21-5"><a href="#cb21-5" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" tabindex="-1"></a>PI.coef</span></code></pre></div>
+<pre><code>##   Depth      alpha         beta     Pmax           R
+## 1     C 0.04765473 0.0008167377 1.829563 -0.03802020
+## 2     D 0.04831189 0.0006403229 1.711964 -0.08212980
+## 3     E 0.04803690 0.0006590037 1.799876 -0.09753279
+## 4     F 0.05699519 0.0006391012 1.710765 -0.09529906
+## 5     G 0.07882413 0.0008882111 1.653043 -0.18828633
+## 6     H 0.02418737 0.0023980135 1.365039  0.23309663</code></pre>
+<p>Similarly, the fits can be graphically examined</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>PI.pr <span class="ot">&lt;-</span> PI <span class="sc">%&gt;%</span> </span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>  <span class="fu">group_by</span>(Depth) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a>  <span class="fu">do</span>({</span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>    d <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">I=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">1700</span>,<span class="dv">20</span>))</span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a>    d<span class="sc">$</span>P <span class="ot">&lt;-</span> <span class="fu">predict</span>(<span class="fu">nls</span>(P<span class="sc">~</span><span class="fu">SSPlatt</span>(I,alpha,beta,Pmax,R),<span class="at">data=</span>.),d)</span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a>    d</span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a>  })</span>
+<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a><span class="fu">ggplot</span>(PI,<span class="fu">aes</span>(<span class="at">x=</span>I,<span class="at">y=</span>P,<span class="at">group=</span>Depth))<span class="sc">+</span></span>
+<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data=</span>PI.pr)<span class="sc">+</span></span>
+<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Depth)</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

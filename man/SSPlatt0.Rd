@@ -16,7 +16,7 @@ SSPlatt0(I, alpha, beta, Pmax)
 \item{Pmax}{light saturated photosynthetic rate}
 }
 \description{
-A \code{selfStart} model for Platt's Photosynthesis-Irradiance
+A `selfStart`` model for Platt's Photosynthesis-Irradiance
 curve without intercept.
 }
 \details{
@@ -35,5 +35,5 @@ Westwood, K.J., Griffiths, F.B., Meiners, K.M. and Williams,
   Topical Studies in Oceanography, 57(9), pp.794-814.
 }
 \seealso{
-\code{\link{SSPlatt}}
+[SSPlatt()]
 }
